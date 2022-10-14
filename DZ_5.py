@@ -97,3 +97,40 @@ print(read_data(input_text))
 print(encode(read_data(input_text))) 
 with open(str(text1),'w') as data:
     data.write(encode(read_data(input_text))) 
+  
+  
+  #Калькулятор
+input_list=input('введите выражение: ').split()
+output=[]
+stack_list=[]
+for elem in input_list:
+    if elem.isdigit():
+       output.append(elem)
+    elif elem =="(": # помещаем в стек (первый вошел последний вышел)
+         stack_list.append(elem)
+    elif elem== ")":
+         while stack_list and stack_list[-1] != "(":
+            output.append(stack_list.pop()) # забираем последний элемент из стек и помещаем в output
+         if not stack_list:
+            print("несогласованные скобки")
+            exit()
+         stack_list.pop()
+    elif elem in ["*", "/"]:
+        while stack_list and stack_list[-1] in ["*", "/"]:
+             output.append(stack_list.pop())
+        stack_list.append(elem)
+    elif elem in ["+", "-"]:
+        while stack_list and stack_list[-1] in ["*", "/", "+", "-"]:
+              output.append(stack_list.pop())
+        stack_list.append(elem)
+        else:
+            print("несогласованный знак")
+            exit()
+   while stack_list:
+       if stack_list[-1] not in ["*", "/", "+", "-"]:
+           print("несогласованные скобки")
+           exit()
+       output.append(stack_list.pop())
+   print(output)
+    
+  
